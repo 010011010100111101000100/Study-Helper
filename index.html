@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Study Helper</title>
+  <title>Study Helper — Polished</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,6 +19,7 @@
     <div class="nav-center">
       <button class="nav-btn" data-view="home">Home</button>
       <button class="nav-btn" data-view="calculator">Calculator</button>
+      <button class="nav-btn" data-view="grammar">Grammar Checker</button>
       <button class="nav-btn" data-view="settings">Settings</button>
     </div>
 
@@ -114,7 +115,6 @@
               width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>
           </div>
 
-          <!-- Optional local music controls (script supports them) -->
           <div class="music-controls-row">
             <button id="musicPrev" class="btn small">◀ Prev</button>
             <button id="musicPlay" class="btn small">▶ Play</button>
@@ -150,6 +150,21 @@
             <button data-cmd="sqrt" class="btn small">√</button><button data-cmd="ln" class="btn small">ln</button><button data-cmd="log" class="btn small">log</button><button data-cmd="C" class="btn small">C</button>
           </div>
         </div>
+      </article>
+    </section>
+
+    <!-- GRAMMAR CHECKER PAGE -->
+    <section id="view-grammar" class="view hidden">
+      <article class="card full">
+        <h2>Grammar Checker</h2>
+        <p class="muted small">Paste or type text below, then click "Check & Fix" for quick grammar suggestions.</p>
+        <textarea id="grammarInput" rows="8" placeholder="Paste your paragraph here..."></textarea>
+        <div style="margin-top:10px;">
+          <button id="checkGrammar" class="btn">Check & Suggest</button>
+          <button id="autoFixGrammar" class="btn">Auto-fix Simple Issues</button>
+        </div>
+
+        <div id="grammarResults" style="margin-top:12px;"></div>
       </article>
     </section>
 
