@@ -1,222 +1,195 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Study Helper — With Spotify Playlists</title>
+  <title>Study Helper</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Starfield background -->
-  <canvas id="starfield"></canvas>
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
   <!-- NAVBAR -->
-
   <nav class="navbar">
-    <div class="nav-left"><div class="logo">📚 Study Helper</div></div>
+    <div class="nav-left">
+      <div class="logo">📚 Study Helper</div>
+    </div>
 
-```
-<div class="nav-center">
-  <button class="nav-btn" data-view="home">Home</button>
-  <button class="nav-btn" data-view="calculator">Calculator</button>
-  <button class="nav-btn" data-view="settings">Settings</button>
-</div>
+    <div class="nav-center">
+      <button class="nav-btn" data-view="home">Home</button>
+      <button class="nav-btn" data-view="calculator">Calculator</button>
+      <button class="nav-btn" data-view="settings">Settings</button>
+    </div>
 
-<div class="nav-right">
-  <div id="dateTime" class="meta-item"></div>
-  <div id="weather" class="meta-item">Weather: —</div>
-</div>
-```
-
+    <div class="nav-right">
+      <div id="dateTime" class="meta-item" aria-live="polite"></div>
+      <div id="weather" class="meta-item">Weather: —</div>
+    </div>
   </nav>
 
   <!-- Onboarding modal -->
-
-  <div id="onboard" class="modal hidden">
+  <div id="onboard" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
     <div class="modal-card">
-      <h2>Welcome!</h2>
-      <p>Are you using a mobile device or desktop?</p>
-
-```
-  <div class="modal-actions">
-    <button id="btnMobile">Mobile</button>
-    <button id="btnDesktop">Desktop/Laptop</button>
-  </div>
-
-  <label class="modal-checkbox">
-    <input id="dontAsk" type="checkbox"> Don’t ask again
-  </label>
-</div>
-```
-
-  </div>
-
-  <!-- MAIN APP -->
-
-  <main class="app">
-
-```
-<!-- HOME PAGE -->
-<section id="view-home" class="view">
-  <div class="grid">
-
-    <!-- Pomodoro -->
-    <article class="card">
-      <h2>Pomodoro</h2>
-      <div class="timer">
-        <div id="timer-display">25:00</div>
-        <div class="timer-controls">
-          <button id="startBtn">Start</button>
-          <button id="pauseBtn">Pause</button>
-          <button id="resetBtn">Reset</button>
-        </div>
-        <div class="pom-config">
-          <label>Work <input id="workMinutes" type="number" value="25"></label>
-          <label>Break <input id="breakMinutes" type="number" value="5"></label>
-        </div>
+      <h2 id="onboardTitle">Welcome!</h2>
+      <p>Are you using a mobile device or desktop? This helps optimize layout.</p>
+      <div class="modal-actions">
+        <button id="btnMobile">Mobile</button>
+        <button id="btnDesktop">Desktop/Laptop</button>
       </div>
-    </article>
-
-    <!-- To-do -->
-    <article class="card">
-      <h2>To-Do</h2>
-      <div class="todo-input">
-        <input id="todoText" placeholder="Add a task...">
-        <button id="addTodoBtn">Add</button>
-      </div>
-      <ul id="todoList"></ul>
-    </article>
-
-    <!-- Notes -->
-    <article class="card">
-      <h2>Notes</h2>
-      <textarea id="notesArea" placeholder="Type notes here..."></textarea>
-    </article>
-
-    <!-- Quote -->
-    <article class="card">
-      <h2>Motivational Quote</h2>
-      <div id="quoteText"></div>
-      <button id="newQuoteBtn" class="small">New</button>
-    </article>
-
-    <!-- Fact -->
-    <article class="card">
-      <h2>Fact of the Day</h2>
-      <div id="factText"></div>
-      <button id="newFactBtn" class="small">Randomize</button>
-    </article>
-
-    <!-- Spotify -->
-    <article class="card">
-      <h2>Chill Music (Spotify)</h2>
-
-      <label class="small">Playlist:</label>
-      <select id="playlistPicker">
-        <option value="2uDVS1t0HqMnczrWgA1xcJ">Lo Fi Hip Hop</option>
-        <option value="2Al9G2jrWkwDlRFMZaw1GX">Lofi Jazz Cafe</option>
-        <option value="3LFIBdP7eZXJKqf3guepZ1">Lofi Fruits Music</option>
-        <option value="4ANPW38qMEYQ3Z1mVLrtmm">low-fi 2025</option>
-        <option value="74sUjcvpGfdOvCHvgzNEDO">Chillhop / Focus Music</option>
-      </select>
-
-      <div class="spotify-embed-wrap">
-        <iframe id="spotifyEmbed"
-          src="https://open.spotify.com/embed/playlist/2uDVS1t0HqMnczrWgA1xcJ"
-          width="100%" height="152" frameborder="0"
-          allow="encrypted-media"></iframe>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- CALCULATOR PAGE -->
-<section id="view-calculator" class="view hidden">
-  <article class="card full">
-    <h2>Scientific Calculator</h2>
-
-    <div class="calc">
-      <input id="calcDisplay" readonly>
-
-      <div class="calc-buttons">
-        <button data-cmd="MC">MC</button>
-        <button data-cmd="MR">MR</button>
-        <button data-cmd="MS">MS</button>
-        <button data-cmd="M+">M+</button>
-
-        <button data-cmd="sin">sin</button>
-        <button data-cmd="cos">cos</button>
-        <button data-cmd="tan">tan</button>
-        <button data-cmd="^">^</button>
-
-        <button data-cmd="7">7</button>
-        <button data-cmd="8">8</button>
-        <button data-cmd="9">9</button>
-        <button data-cmd="/">/</button>
-
-        <button data-cmd="4">4</button>
-        <button data-cmd="5">5</button>
-        <button data-cmd="6">6</button>
-        <button data-cmd="*">*</button>
-
-        <button data-cmd="1">1</button>
-        <button data-cmd="2">2</button>
-        <button data-cmd="3">3</button>
-        <button data-cmd="-">-</button>
-
-        <button data-cmd="0">0</button>
-        <button data-cmd=".">.</button>
-        <button data-cmd="=">=</button>
-        <button data-cmd="+">+</button>
-
-        <button data-cmd="sqrt">√</button>
-        <button data-cmd="ln">ln</button>
-        <button data-cmd="log">log</button>
-        <button data-cmd="C">C</button>
-      </div>
+      <label class="modal-checkbox"><input id="dontAsk" type="checkbox"> Don't ask again</label>
     </div>
-  </article>
-</section>
+  </div>
 
-<!-- SETTINGS PAGE -->
-<section id="view-settings" class="view hidden">
-  <article class="card full">
-    <h2>Settings</h2>
+  <!-- MAIN APP (leave space under fixed navbar) -->
+  <main class="app" style="padding-top:84px;">
 
-    <label>Theme:
-      <select id="themeSelect">
-        <option value="space">Space</option>
-        <option value="neon">Neon</option>
-        <option value="chill">Chill</option>
-        <option value="nature">Nature</option>
-        <option value="future">Futuristic</option>
-      </select>
-    </label>
+    <!-- HOME VIEW -->
+    <section id="view-home" class="view">
+      <div class="grid">
 
-    <label>Sound effects: <input id="soundToggle" type="checkbox" checked></label>
-    <label>Music: <input id="musicToggle" type="checkbox" checked></label>
-    <label>Auto-dark: <input id="autoDark" type="checkbox"></label>
+        <!-- Pomodoro -->
+        <article class="card">
+          <h2>Pomodoro</h2>
+          <div class="timer">
+            <div id="timer-display" class="timer-display">25:00</div>
+            <div class="timer-controls">
+              <button id="startBtn" class="btn">Start</button>
+              <button id="pauseBtn" class="btn">Pause</button>
+              <button id="resetBtn" class="btn">Reset</button>
+            </div>
+            <div class="pom-config">
+              <label>Work <input id="workMinutes" type="number" min="1" value="25"></label>
+              <label>Break <input id="breakMinutes" type="number" min="1" value="5"></label>
+            </div>
+          </div>
+        </article>
 
-    <h3>Playlist (Optional)</h3>
-    <textarea id="playlistInput"></textarea>
-    <button id="savePlaylist">Save playlist</button>
-  </article>
-</section>
-```
+        <!-- To-do -->
+        <article class="card">
+          <h2>To-Do</h2>
+          <div class="todo-input-row">
+            <input id="todoText" placeholder="Add a task..." />
+            <button id="addTodoBtn" class="btn">Add</button>
+          </div>
+          <ul id="todoList" class="todo-list"></ul>
+        </article>
+
+        <!-- Notes -->
+        <article class="card">
+          <h2>Notes</h2>
+          <textarea id="notesArea" placeholder="Type notes here..."></textarea>
+        </article>
+
+        <!-- Quote -->
+        <article class="card">
+          <h2>Motivational Quote</h2>
+          <div id="quoteText" class="quote-text"></div>
+          <button id="newQuoteBtn" class="small btn">New</button>
+        </article>
+
+        <!-- Fact -->
+        <article class="card">
+          <h2>Fact of the Day</h2>
+          <div id="factText" class="fact-text"></div>
+          <button id="newFactBtn" class="small btn">Randomize</button>
+        </article>
+
+        <!-- Music (Spotify embed + optional local controls) -->
+        <article class="card">
+          <h2>Chill Music</h2>
+
+          <label class="small">Spotify playlist:</label>
+          <select id="playlistPicker" class="theme-select">
+            <option value="2uDVS1t0HqMnczrWgA1xcJ">Lo Fi Hip Hop</option>
+            <option value="2Al9G2jrWkwDlRFMZaw1GX">Lofi Jazz Cafe</option>
+            <option value="3LFIBdP7eZXJKqf3guepZ1">Lofi Fruits Music</option>
+            <option value="4ANPW38qMEYQ3Z1mVLrtmm">low-fi 2025</option>
+            <option value="74sUjcvpGfdOvCHvgzNEDO">Chillhop / Focus Music</option>
+          </select>
+
+          <div class="spotify-embed-wrap">
+            <iframe id="spotifyEmbed"
+              src="https://open.spotify.com/embed/playlist/2uDVS1t0HqMnczrWgA1xcJ"
+              width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>
+          </div>
+
+          <!-- Optional local music controls (script supports them) -->
+          <div class="music-controls-row">
+            <button id="musicPrev" class="btn small">◀ Prev</button>
+            <button id="musicPlay" class="btn small">▶ Play</button>
+            <button id="musicNext" class="btn small">Next ▶</button>
+            <button id="musicDownload" class="btn small">⬇ Download</button>
+            <span id="musicLabel" class="muted small">No local track</span>
+          </div>
+
+          <p class="muted small">To enable file downloads or local looping, put files in <code>assets/music/</code> and add their paths in Settings → Playlist.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CALCULATOR PAGE -->
+    <section id="view-calculator" class="view hidden">
+      <article class="card full">
+        <h2>Scientific Calculator</h2>
+
+        <div class="calc">
+          <input id="calcDisplay" readonly />
+
+          <div class="calc-buttons">
+            <button data-cmd="MC" class="btn small">MC</button><button data-cmd="MR" class="btn small">MR</button><button data-cmd="MS" class="btn small">MS</button><button data-cmd="M+" class="btn small">M+</button>
+
+            <button data-cmd="sin" class="btn small">sin</button><button data-cmd="cos" class="btn small">cos</button><button data-cmd="tan" class="btn small">tan</button><button data-cmd="^" class="btn small">^</button>
+
+            <button data-cmd="7" class="btn">7</button><button data-cmd="8" class="btn">8</button><button data-cmd="9" class="btn">9</button><button data-cmd="/" class="btn">/</button>
+            <button data-cmd="4" class="btn">4</button><button data-cmd="5" class="btn">5</button><button data-cmd="6" class="btn">6</button><button data-cmd="*" class="btn">*</button>
+            <button data-cmd="1" class="btn">1</button><button data-cmd="2" class="btn">2</button><button data-cmd="3" class="btn">3</button><button data-cmd="-" class="btn">-</button>
+            <button data-cmd="0" class="btn">0</button><button data-cmd="." class="btn">.</button><button data-cmd="=" class="btn">=</button><button data-cmd="+" class="btn">+</button>
+
+            <button data-cmd="sqrt" class="btn small">√</button><button data-cmd="ln" class="btn small">ln</button><button data-cmd="log" class="btn small">log</button><button data-cmd="C" class="btn small">C</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="view-settings" class="view hidden">
+      <article class="card full">
+        <h2>Settings</h2>
+
+        <div class="settings-grid">
+          <label>Theme:
+            <select id="themeSelect" class="theme-select">
+              <option value="space">Space</option>
+              <option value="neon">Neon</option>
+              <option value="chill">Chill</option>
+              <option value="nature">Nature</option>
+              <option value="future">Futuristic</option>
+            </select>
+          </label>
+
+          <label>Sound effects: <input id="soundToggle" type="checkbox" checked></label>
+          <label>Music: <input id="musicToggle" type="checkbox" checked></label>
+          <label>Auto-dark: <input id="autoDark" type="checkbox"></label>
+        </div>
+
+        <h3>Playlist (optional)</h3>
+        <p class="muted small">Add repo paths (e.g. <code>assets/music/lofi1.mp3</code>) or public MP3 URLs, comma-separated.</p>
+        <textarea id="playlistInput" rows="3" placeholder="assets/music/lofi1.mp3, assets/music/ambient1.mp3"></textarea>
+        <div style="margin-top:10px;"><button id="savePlaylist" class="btn">Save playlist</button></div>
+      </article>
+    </section>
 
   </main>
 
-  <!-- Sounds -->
+  <!-- Sound effects -->
+  <audio id="sClick" preload="auto"></audio>
+  <audio id="sComplete" preload="auto"></audio>
 
-<audio id="sClick"></audio> <audio id="sComplete"></audio>
-
-  <!-- Local music (optional) -->
-
-<audio id="musicPlayer" loop></audio>
+  <!-- Local music player (optional) -->
+  <audio id="musicPlayer" preload="auto" loop></audio>
 
   <script src="script.js"></script>
-
 </body>
 </html>
