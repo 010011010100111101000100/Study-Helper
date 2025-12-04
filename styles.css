@@ -1,5 +1,5 @@
 /* -----------------------------------
-   GLOBAL + ROOT VARIABLES
+   ROOT VARIABLES + THEMES
 ----------------------------------- */
 
 :root {
@@ -12,7 +12,7 @@
     --transition: 0.25s ease;
 }
 
-/* Themes ---------------------------- */
+/* Themes */
 
 .theme-space {
     --bg: #050510;
@@ -22,7 +22,7 @@
 
 .theme-neon {
     --bg: #070707;
-    --bg2: #101010;
+    --bg2: #111;
     --accent: #0ff;
 }
 
@@ -33,36 +33,37 @@
 }
 
 .theme-nature {
-    --bg: #102015;
-    --bg2: #182a20;
-    --accent: #7aff8c;
+    --bg: #0e2414;
+    --bg2: #183321;
+    --accent: #71ff9b;
 }
 
 .theme-future {
-    --bg: #0d0d0d;
-    --bg2: #151515;
-    --accent: #8a4dff;
+    --bg: #0a0a0a;
+    --bg2: #1a1a1a;
+    --accent: #8f52ff;
 }
 
 /* -----------------------------------
-   BASIC STYLING
+   GLOBAL
 ----------------------------------- */
 
 body {
     margin: 0;
-    padding: 0;
+    font-family: "Segoe UI", sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: "Segoe UI", sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* Scroll container for multi-page layout */
-.page-container {
-    position: relative;
-    overflow-y: auto;
-    height: 100vh;
-    padding-bottom: 80px;
+/* Make pages scrollable under fixed navbar */
+main.app {
+    padding: 0 20px;
+}
+
+/* Hidden class for tab switching */
+.hidden {
+    display: none !important;
 }
 
 /* -----------------------------------
@@ -75,7 +76,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -5;
+    z-index: -10;
     pointer-events: none;
 }
 
@@ -83,84 +84,130 @@ body {
    NAVBAR
 ----------------------------------- */
 
-nav {
+.navbar {
     width: 100%;
     background: var(--bg2);
-    padding: 12px 30px;
+    padding: 14px 26px;
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--accent);
     position: fixed;
     top: 0;
-    z-index: 10;
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--accent);
+    left: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
 }
 
-nav button {
+.nav-center button {
     background: var(--card);
     color: var(--text);
     padding: 10px 18px;
-    border-radius: 8px;
+    margin: 0 5px;
     border: 1px solid transparent;
+    border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
 }
 
-nav button:hover {
+.nav-center button:hover {
     background: var(--accent);
     color: #000;
 }
 
 /* -----------------------------------
-   CARD ELEMENTS
+   GRID LAYOUT
+----------------------------------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 22px;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+/* -----------------------------------
+   CARDS
 ----------------------------------- */
 
 .card {
     background: var(--card);
-    padding: 20px;
-    margin: 20px;
-    border-radius: 12px;
     backdrop-filter: var(--blur);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    animation: fadeIn 0.6s ease;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    animation: fadeIn 0.5s ease;
 }
 
+.card.full {
+    grid-column: 1 / -1;
+}
+
+/* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* -----------------------------------
+   BUTTONS
+----------------------------------- */
+
+.btn, button {
+    padding: 10px 16px;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.small {
+    padding: 6px 12px;
+    font-size: 14px;
 }
 
 /* -----------------------------------
    TO-DO LIST
 ----------------------------------- */
 
-.todo-input {
-    width: 80%;
+.todo-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+#todoText {
+    flex: 1;
     padding: 10px;
     border-radius: 6px;
     border: none;
-    margin-right: 10px;
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
 }
 
-.todo-btn {
-    padding: 10px 18px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    background: var(--accent);
-    color: #000;
+.todo-list {
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
 }
 
 .todo-item {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 12px;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .todo-delete {
     cursor: pointer;
-    color: #ff5858;
+    color: #ff6d6d;
 }
 
 /* -----------------------------------
@@ -172,127 +219,142 @@ nav button:hover {
     height: 200px;
     padding: 12px;
     border-radius: 6px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
     border: none;
-    color: var(--text);
 }
 
 /* -----------------------------------
-   SETTINGS
+   FACT + QUOTE
 ----------------------------------- */
 
-.settings-option {
-    margin: 15px 0;
-    padding: 12px;
-    background: var(--card);
-    border-radius: 8px;
+.quote-text,
+.fact-text {
+    min-height: 60px;
+    padding: 8px 0;
+    font-size: 16px;
+    opacity: 0.9;
 }
 
-.theme-select {
+/* -----------------------------------
+   SPOTIFY EMBED
+----------------------------------- */
+
+.spotify-embed-wrap iframe {
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 152px;
+}
+
+.music-controls-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* -----------------------------------
+   CALCULATOR
+----------------------------------- */
+
+.calc {
+    margin-top: 15px;
+}
+
+#calcDisplay {
+    width: 100%;
+    height: 55px;
+    font-size: 26px;
+    background: #000;
+    color: var(--accent);
+    border-radius: 8px;
+    border: none;
     padding: 10px;
-    border-radius: 6px;
-    background: var(--bg2);
-    color: var(--text);
-    border: 1px solid var(--accent);
+    text-align: right;
+    margin-bottom: 15px;
 }
 
-/* -----------------------------------
-   CALCULATOR PAGE
------------------------------------ */
-
-.calculator-grid {
+.calc-buttons {
     display: grid;
-    margin-top: 20px;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
 }
 
-.calc-btn {
-    padding: 18px;
-    font-size: 18px;
-    border-radius: 8px;
+.calc-buttons button {
     background: var(--card);
-    text-align: center;
-    cursor: pointer;
-    transition: var(--transition);
-    border: 1px solid transparent;
+    color: var(--text);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
 }
 
-.calc-btn:hover {
+.calc-buttons button:hover {
     background: var(--accent);
     color: #000;
 }
 
-#calc-display {
-    width: 100%;
-    padding: 18px;
-    background: #000;
-    color: var(--accent);
-    border-radius: 10px;
-    font-size: 26px;
-    text-align: right;
+/* -----------------------------------
+   SETTINGS PAGE
+----------------------------------- */
+
+.settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.theme-select {
+    background: var(--bg2);
+    color: var(--text);
+    padding: 10px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
 }
 
 /* -----------------------------------
-   DEVICE ONBOARD SCREEN
+   MODAL
 ----------------------------------- */
 
-#deviceModal {
+.modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    display: none;
-    justify-content: center;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 100;
 }
 
 .modal-card {
     background: var(--bg2);
-    padding: 30px;
+    padding: 26px;
     border-radius: 12px;
     width: 320px;
-    text-align: center;
     border: 1px solid var(--accent);
+    text-align: center;
 }
 
 .modal-card button {
-    padding: 12px 18px;
     width: 100%;
+    padding: 12px;
     margin-top: 10px;
     border-radius: 6px;
-    background: var(--accent);
-    color: #000;
-    border: none;
-}
-
-.modal-card button:hover {
-    opacity: 0.85;
 }
 
 /* -----------------------------------
-   SPOTIFY PLAYER FRAME
------------------------------------ */
-
-.spotify-frame {
-    width: 100%;
-    border-radius: 10px;
-    border: none;
-    height: 152px;
-    margin: 15px 0;
-}
-
-/* -----------------------------------
-   MOBILE FIXES
+   MEDIA QUERIES
 ----------------------------------- */
 
 @media (max-width: 700px) {
-    nav {
-        justify-content: center;
+    .navbar {
+        flex-wrap: wrap;
+        padding: 12px;
+        gap: 10px;
     }
-    .card {
-        margin: 15px;
+
+    .nav-center button {
+        margin: 2px;
+        padding: 8px 14px;
     }
 }
